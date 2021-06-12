@@ -1,0 +1,26 @@
+signup!
+
+<form action="/users" method="POST">
+
+  username:<input type="text" name="username">  </input>
+  Email:<input type="text" name="email">  </input>
+  password:<input type="text" name="password">  </input>
+
+  <input type="submit" value="Sign up!" />
+</form>
+
+<ul>
+<% results.each do |player| %> 
+<li>
+<%= player["id"] %> 
+<%= player["username"] %> 
+
+<% end %>
+
+<% results.each do |player| %>
+<section class="food-item">
+<h2><%= player["id"] %> </h2>
+
+</section>
+<% end %>
+</ul>
