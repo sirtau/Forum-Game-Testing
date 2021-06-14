@@ -1,7 +1,7 @@
 def create_user( username, email, password )
     password_digest = BCrypt::Password.create(password)
 
-    run_sql( "INSERT INTO users(username,email,password_digest, gamestate, level, xp_points, inventory) VALUES('#{username}','#{email}','#{password_digest}','new', 1, 0, 'e');" )
+    run_sql( "INSERT INTO users(username,email,password_digest) VALUES('#{username}','#{email}','#{password_digest}');" )
 end
 
 def all_users 
@@ -19,7 +19,7 @@ def find_user_by_username ( user )
     end 
 end
 
-
+# SELECT username, char_name FROM users INNER JOIN characters ON characters.owner_id=users.id;
 
 def find_user_by_id ( id )
     sql_query = ("SELECT * FROM users WHERE id = #{id}")
@@ -32,7 +32,7 @@ def find_user_by_id ( id )
 end
 
 
-def is_logged_in? ( usersssion )
+def is_logged_in? ( usersession )
     if session[:user_id]
 
         

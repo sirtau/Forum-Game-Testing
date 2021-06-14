@@ -1,0 +1,14 @@
+Log in - Username
+Each user has a Character list, each char associated with their ID
+
+
+Town Hub - Index page
+Status/message bar
+
+shop - javascript
+Load variables from SQL and shop interface from javascript
+On save, return to Town - UPDATE player inventory
+
+Show selected Character
+Drop-down menu character list
+

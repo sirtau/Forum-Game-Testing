@@ -1,5 +1,11 @@
-signup!
 
+<% if session[:user_id] %>
+Welcome<%= session[:user_id] %>!
+<% else %>
+<a href="/sessions/login">Login</a>
+<% end %>
+
+signup!
 <form action="/users" method="POST">
 
   username:<input type="text" name="username">  </input>
@@ -14,6 +20,7 @@ signup!
 <li>
 <%= player["id"] %> 
 <%= player["username"] %> 
+<%= player["email"] %> 
 
 <% end %>
 
@@ -24,3 +31,5 @@ signup!
 </section>
 <% end %>
 </ul>
+
+
