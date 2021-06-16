@@ -28,3 +28,12 @@ CREATE TABLE characters (
 );
 
 
+SELECT username, char_name FROM users INNER JOIN characters ON characters.owner_id=users.id;
+SELECT * FROM characters;
+SELECT * FROM characters INNER JOIN users ON users.id=characters.owner_id;
+
+
+INSERT INTO characters(owner_id,char_name,gamestate,char_level,xp_points,max_health,current_health,max_mana,current_mana,strength,stamina,defence,gold,inventory ) VALUES(2,'char_name','new',1,0,25,25,15,15,10,10,10,0,'e');
+
+
+

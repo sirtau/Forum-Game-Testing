@@ -1,0 +1,40 @@
+
+<% if session[:user_id] %>
+Welcome<%= session[:user_id] %>!
+
+<% if session[:character_array] == "invalid" %>
+<%= p session[:character_array] %>
+<%= p "Invalid Character" %>
+<% elsif session[:character_array] %> 
+<%= session[:character_array]["char_name"] %>
+<% end %>
+
+<p>yes
+
+</p>
+<ul>
+  <% char_list.each do |char| %> 
+  <li>
+    <a href='/select_character/<%= char["char_id"] %>'> 
+  <%= char["char_id"] %> 
+  <%= char["owner_id"] %> </a>
+  <%= char["char_name"] %> 
+  <%= char["gamestate"] %>
+  <% if char["inventory"] == 'e' %>  
+  <%= "Empty" %>
+  <% else %>
+  <%= char["inventory"] %> 
+  <% end %>
+
+
+<% end %>
+<% else %>
+<a href="/sessions/login">Login</a>
+<% end %>
+
+
+
+
+</ul>
+
+
