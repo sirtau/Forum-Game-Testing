@@ -22,6 +22,7 @@ post '/users' do
 
     if bcrypt_password == password
         session[:user_id] = user['id']
+        session[:username] = user['username']
         puts "User logged in"
         redirect '/'
     else
@@ -36,12 +37,13 @@ end
 get '/select_character/:id' do |id|
 
 
-    character_array_get = get_current_character( id )
+    character_hash_get = get_current_character( id )
 
-    if character_array_get["owner_id"] == session[:user_id]
-        session[:character_array] = character_array_get
+    if character_hash_get["owner_id"] == session[:user_id]
+        session[:character_hash] = character_hash_get
+        
     else
-        session[:character_array] = "invalid"
+        session[:character_hash] = "invalid"
     end
     
 

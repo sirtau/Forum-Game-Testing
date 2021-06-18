@@ -1,0 +1,422 @@
+
+<script src="https://kaboomjs.com/lib/0.5.1/kaboom.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="module">
+
+
+function posttest () {
+    $.post( "/posttest", {
+    username: "test1",
+    email: "test2",
+    password: "test3",
+    });
+}
+
+class Character {
+        constructor ( _name, _level ) {
+            this.name = _name;
+            this.level = _level;
+        }
+    }
+    
+    class ScaledEntity extends Character {
+        constructor (_name, _level) {
+            super(_name, _level);
+            this.max_health = _level*5;
+            this.current_health = _level*5;
+            this.max_mana = _level;
+            this.current_mana = _level;
+            this.strength = _level;
+            this.stamina = _level;
+            this.defence = _level;
+        }
+    }
+    // let enemy = new ScaledEntity("slime", 4);
+    // {"char_id"=>"6", "owner_id"=>"1", "char_name"=>"char3", "gamestate"=>"new", "char_level"=>"1", "xp_points"=>"0", "max_health"=>"25", "current_health"=>"25", "max_mana"=>"15", "current_mana"=>"15", "strength"=>"10", "stamina"=>"10", "defence"=>"10", "gold"=>"0", "inventory"=>"A lobster"}
+
+    class Player extends Character {
+        constructor (_name, _level, _max_health, _current_health, _max_mana, _current_mana, _strength, _stamina, _defence) {
+            super(_name, _level);
+            this.max_health = _max_health;
+            this.current_health = _current_health;
+            this.max_mana = _max_mana;
+            this.current_mana = _current_mana;
+            this.strength = _strength;
+            this.stamina = _stamina;
+            this.defence = _defence;
+           
+
+        }
+    }
+     //TODO - make Max Health basd on stamina
+    let player = new Player('<%= character_hash["char_name"] %>',
+        '<%= character_hash["char_level"] %>',
+        '<%= character_hash["max_health"] %>',
+        '<%= character_hash["current_health"] %>',
+        '<%= character_hash["max_mana"] %>',
+        '<%= character_hash["current_mana"] %>',
+        '<%= character_hash["strength"] %>',
+        '<%= character_hash["stamina"] %>',
+        '<%= character_hash["defence"] %>')
+   
+
+
+
+
+
+
+
+    function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return (Math.floor(Math.random() * (max - min) + min)) + 1;
+    }
+
+
+    function swingStrength( value ) {
+        let swingFromStrength = getRandomInt(0, value)
+        console.log()
+        console.log(`Str: ${value}, Swing: ${swingFromStrength}`)
+        return swingFromStrength
+    }
+
+    function takeDamage( entity ) {
+        entity.current_health = entity.current_health - damage
+    }
+
+
+//floor max + 1 so that max is inclusive
+
+    let enemy = new ScaledEntity("slime", 10);
+    console.log(enemy);
+    console.log(enemy.name)
+    console.log(enemy.damage)
+    console.log(player)
+ 
+
+    
+
+
+
+
+    function fightScene () {
+        let fightActive = true
+
+        while (fightActive) {
+
+            let playerSwing = swingStrength(player.strength)
+            let damage = playerSwing*2 - (enemy.defence/2)
+            if (damage < 0) {
+                damage = 0
+            }
+            console.log(`${player.name}'s Swing Strength: ${playerSwing}. Damage Done: ${damage}`)
+            console.log(`${enemy.name} has ${enemy.current_health - damage} HP left.`)
+            enemy.current_health = enemy.current_health - damage
+
+
+            if (enemy.current_health < 1) {
+                console.log(`You have defeated the dangerous ${enemy.name}`)
+                fightActive = false
+                break
+            }
+
+            let enemySwing = swingStrength(enemy.strength)
+            let enemyDamage = enemySwing*2 - (player.defence/2)
+            if (enemyDamage < 0) {
+                enemyDamage = 0
+                console.log(`${enemy.name} missed!`)
+            } else {
+            console.log(`${enemy.name}'s Swing Strength: ${enemySwing}. Damage Done: ${enemyDamage}`)
+            console.log(`${player.name} has ${player.current_health - enemyDamage} HP left.`)
+            player.current_health = player.current_health - enemyDamage
+
+
+            if (player.current_health < 1) {
+                console.log(`You were killed by ${enemy.name}!`)
+                fightActive = false
+            }
+        }           
+
+
+            
+            
+        }
+
+
+    
+    }
+
+fightScene()
+
+
+
+
+// let playerInit = '<%= character_hash %>'
+// console.log(playerInit)
+// let playerConvert = playerInit.replace(/>/g, "").replace(/=/g,":")
+// playerConvert = 'let testvarx = '+ playerConvert
+
+// eval(console.log(playerConvert))
+
+
+// eval(console.log(playerConvert))
+
+    // let testeval = eval(console.log(playerConvert))
+    // console.log("test eval" + testeval)
+
+    kaboom({
+        global: true,
+        fullscreen: false,
+        scale: 2,
+        debug: true,
+        clearColor: [0, 0, 0, 0.1],
+    });
+
+    loadRoot("/img/");
+    loadSprite("left-wall", "hedge_right.png");
+    loadSprite("top-wall", "hedge_top.png");
+    loadSprite("bottom-wall", "hedge_top.png");
+    loadSprite("right-wall", "hedge_right.png");
+    loadSprite("bottom-left-wall", "hedge_bottom_left.png");
+    loadSprite("bottom-right-wall", "hedge_bottom_right.png");
+    loadSprite("top-left-wall", "hedge_top_left.png");
+    loadSprite("top-right-wall", "hedge_top_right.png");
+    loadSprite("bg", "grass_192.png");
+    loadSprite("player-going-left", "left2.png");
+    loadSprite("player-going-right", "right2.png");
+    loadSprite("player-going-down", "down2.png");
+    loadSprite("player-going-up", "up2.png");
+
+    loadRoot("https://i.imgur.com/");
+    loadSprite("top-door", "U9nre4n.png");
+    loadSprite("fire-pot", "I7xSp7w.png");
+    loadSprite("left-door", "okdJNls.png");
+    loadSprite("lanterns", "wiSiY09.png");
+    loadSprite("slicer", "c6JFi5Z.png");
+    loadSprite("skeletor", "Ei1VnX8.png");
+    loadSprite("kaboom", "o9WizfI.png");
+    loadSprite("stairs", "VghkL08.png");
+
+    //u4DVsx6
+
+    scene("game", ({ level, score }) => {
+        layers(["bg", "obj", "ui"], "obj");
+
+        const maps = [
+            [
+                "yccccccccccw",
+                "a          b",
+                "a          b",
+                "a          b",
+                "a          b",
+                "a          b",
+                "a          b",
+                "a          b",
+                "a          b",
+                "xddddddddddz",
+            ],
+
+            [
+                "yccccccccccw",
+                "a          b",
+                "a          b",
+                "a          b",
+                "a          b",
+                "a          b",
+                "a          b",
+                "a          b",
+                "a          b",
+                "xddddddddddz",
+            ],
+        ];
+        const levelCfg = {
+            width: 48,
+            height: 48,
+            a: [sprite("left-wall"), solid(), "wall", scale(3)],
+            b: [sprite("right-wall"), solid(), "wall", scale(3)],
+            c: [sprite("top-wall"), solid(), "wall", scale(3)],
+            d: [sprite("bottom-wall"), solid(), "wall", scale(3)],
+            w: [sprite("top-right-wall"), solid(), "wall", scale(3)],
+            x: [sprite("bottom-left-wall"), solid(), "wall", scale(3)],
+            y: [sprite("top-left-wall"), solid(), "wall", scale(3)],
+            z: [sprite("bottom-right-wall"), solid(), "wall", scale(3)],
+            "%": [sprite("left-door"), scale(3)],
+            "^": [sprite("top-door"), "next-level"],
+            $: [sprite("stairs"), "next-level"],
+            "*": [sprite("slicer"), "slicer", "dangerous", { dir: -1 }],
+            "}": [
+                sprite("skeletor"),
+                "skeletor",
+                "dangerous",
+                { dir: -1, timer: 0 },
+            ],
+            ")": [sprite("lanterns"), solid(), "wall"],
+            "(": [sprite("fire-pot"), solid()],
+        };
+
+        addLevel(maps[level], levelCfg);
+        add([sprite("bg"), scale(3), layer("bg")]);
+
+        const scoreLabel = add([
+            text("0"),
+            pos(200, 250),
+            layer("ui"),
+            {
+                value: score,
+            },
+        ]);
+
+        const player = add([
+            sprite("player-going-right"),
+            area(vec2(0.2), vec2(0.1)),
+            pos(50, 120),
+            {
+                dir: vec2(1, 0),
+            },
+            ,
+            scale(3),
+            origin("center"),
+        ]);
+
+        player.action(() => {
+            player.resolve();
+        });
+
+        player.overlaps("next-level", () => {
+            go("game", {
+                level: (level + 1) % maps.length,
+                score: scoreLabel.value,
+            });
+        });
+
+        const MOVE_SPEED = 120;
+        const SLICER_SPEED = 120;
+        const SKELETOR_SPEED = 120;
+
+        keyDown("left", () => {
+            player.changeSprite("player-going-left");
+            player.move(-MOVE_SPEED, 0);
+            player.dir = vec2(-1, 0);
+        });
+
+        keyDown("right", () => {
+            player.changeSprite("player-going-right");
+            player.move(MOVE_SPEED, 0);
+            player.dir = vec2(1, 0);
+            fightScene()
+            console.log('******NEW GAME ****')
+        });
+
+        keyDown("up", () => {
+            player.changeSprite("player-going-up");
+            player.move(0, -MOVE_SPEED);
+            player.dir = vec2(0, -1);
+        });
+
+        keyDown("down", () => {
+            player.changeSprite("player-going-down");
+            player.move(0, MOVE_SPEED);
+            player.dir = vec2(0, 1);
+        });
+
+        function spawnKaboom(p) {
+            const obj = add([sprite("kaboom"), pos(p), "kaboom"]);
+            wait(1, () => {
+                destroy(obj);
+            });
+        }
+
+        keyPress("space", () => {
+            spawnKaboom(player.pos.add(player.dir.scale(48)));
+        });
+
+        action("slicer", (s) => {
+            s.move(s.dir * SLICER_SPEED, 0);
+        });
+
+        collides("dangerous", "wall", (s) => {
+            s.dir = -s.dir;
+        });
+
+        action("skeletor", (s) => {
+            s.move(0, s.dir * SKELETOR_SPEED);
+            s.timer -= dt();
+            if (s.timer <= 0) {
+                s.dir = -s.dir;
+                s.timer = rand(5);
+            }
+        });
+
+        collides("kaboom", "skeletor", (k, s) => {
+            camShake(4);
+            wait(1, () => {
+                destroy(k);
+            });
+            destroy(s);
+            scoreLabel.value++;
+            scoreLabel.text = scoreLabel.value;
+        });
+
+        player.overlaps("dangerous", () => {
+            go("lose", { score: scoreLabel.value });
+        });
+
+        addButton("start", vec2(100, 100), () => {
+            let monster = new ScaledEntity("slime", 4);
+    console.log(monster);
+        });
+
+        addButton("quit", vec2(100, 150), () => {
+            posttest()
+        });
+    });
+
+    scene("lose", ({ score }) => {
+        add([text(score, 32), origin("center"), pos(width() / 2, height() / 2)]);
+    });
+
+    scene("main", () => {
+        addButton("start", vec2(100, 100), () => {
+            alert("oh hi");
+        });
+
+        addButton("quit", vec2(100, 150), () => {
+            alert("bye");
+        });
+    });
+
+
+
+    start("game", { level: 0, score: 0 });
+
+
+
+
+
+
+    function addButton(txt, p, f) {
+        const bg = add([pos(p), rect(60, 30), origin("center"), color(1, 1, 1)]);
+
+        // TODO: text() and rect() both have 'width'
+        add([text(txt), pos(p), , origin("center"), color(0, 0, 0)]);
+
+        bg.action(() => {
+            if (bg.isHovered()) {
+                bg.color = rgb(0.8, 0.8, 0.8);
+                if (mouseIsClicked()) {
+                    f();
+                }
+            } else {
+                bg.color = rgb(1, 1, 1);
+            }
+        });
+    }
+
+
+
+
+
+
+</script>
+
+<p><%= character_hash %> </p>
