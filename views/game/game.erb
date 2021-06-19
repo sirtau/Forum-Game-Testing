@@ -4,6 +4,49 @@
 <script type="module">
 
 
+
+    function addButton(txt, p, f) {
+        const bg = add([pos(p), rect(90, 21), origin("left"), color(1, 1, 1)]);
+
+            // TODO: text() and rect() both have 'width'
+        add([text(txt), pos(p), origin("left"), color(0, 0, 0)]);
+
+        bg.action(() => {
+            if (bg.isHovered()) {
+                bg.color = rgb(0.8, 0.8, 0.8);
+                if (mouseIsClicked()) {
+                    f();
+                }
+            } else {
+                bg.color = rgb(1, 1, 1);
+            }
+            
+        });
+    }
+
+
+    function addTextElement(txt, p,) {
+    const textElement = add([text(txt), pos(p), origin("left"), color(1,1,1)])
+
+}
+
+
+
+
+           
+
+
+
+    // const name = add([
+    //         text(`Welcome, ${player.name}!\n`),
+    //         pos(500,400),
+    //         layer("ui"),
+    //         scale()
+    //     ]);
+
+
+
+
 function posttest () {
     $.post( "/posttest", {
     username: "test1",
@@ -35,8 +78,9 @@ class Character {
     // {"char_id"=>"6", "owner_id"=>"1", "char_name"=>"char3", "gamestate"=>"new", "char_level"=>"1", "xp_points"=>"0", "max_health"=>"25", "current_health"=>"25", "max_mana"=>"15", "current_mana"=>"15", "strength"=>"10", "stamina"=>"10", "defence"=>"10", "gold"=>"0", "inventory"=>"A lobster"}
 
     class Player extends Character {
-        constructor (_name, _level, _max_health, _current_health, _max_mana, _current_mana, _strength, _stamina, _defence) {
+        constructor (_name, _level, _experience, _max_health, _current_health, _max_mana, _current_mana, _strength, _stamina, _defence) {
             super(_name, _level);
+            this.experience = _experience;
             this.max_health = _max_health;
             this.current_health = _current_health;
             this.max_mana = _max_mana;
@@ -51,6 +95,7 @@ class Character {
      //TODO - make Max Health basd on stamina
     let player = new Player('<%= character_hash["char_name"] %>',
         '<%= character_hash["char_level"] %>',
+        '<%= character_hash["xp_points"] %>',
         '<%= character_hash["max_health"] %>',
         '<%= character_hash["current_health"] %>',
         '<%= character_hash["max_mana"] %>',
@@ -75,8 +120,8 @@ class Character {
 
     function swingStrength( value ) {
         let swingFromStrength = getRandomInt(0, value)
-        console.log()
-        console.log(`Str: ${value}, Swing: ${swingFromStrength}`)
+        // console.log()
+        // console.log(`Str: ${value}, Swing: ${swingFromStrength}`)
         return swingFromStrength
     }
 
@@ -98,6 +143,44 @@ class Character {
 
 
 
+    function playerRound ( ) {
+    let bothAlive 
+        let playerSwing = swingStrength(player.strength)
+            let damage = playerSwing*2 - (enemy.defence/2)
+            if (damage < 0) {
+                damage = 0
+                console.log(`${player.name} missed!`)
+            }
+            return `${player.name}'s Swing Strength: ${playerSwing}. Damage Done: ${damage}\n${enemy.name} has ${enemy.current_health - damage} HP left.`
+            // console.log(textDisplay)
+            enemy.current_health = enemy.current_health - damage
+
+
+            if (enemy.current_health < 1) {
+                console.log(`You have defeated the dangerous ${enemy.name}`)
+                
+            }   
+    }
+    function enemyRound() {
+        let enemySwing = swingStrength(enemy.strength)
+            let enemyDamage = enemySwing*2 - (player.defence/2)
+            if (enemyDamage < 0) {
+                enemyDamage = 0
+                console.log(`${enemy.name} missed!`)
+            } else {
+                
+            console.log(`${player.name} has ${player.current_health - enemyDamage} HP left.`)
+            player.current_health = player.current_health - enemyDamage
+
+
+            if (player.current_health < 1) {
+                console.log(`You were killed by ${enemy.name}!`)
+            }
+                 
+        }
+    }
+
+
 
     function fightScene () {
         let fightActive = true
@@ -108,6 +191,7 @@ class Character {
             let damage = playerSwing*2 - (enemy.defence/2)
             if (damage < 0) {
                 damage = 0
+                console.log(`${player.name} missed!`)
             }
             console.log(`${player.name}'s Swing Strength: ${playerSwing}. Damage Done: ${damage}`)
             console.log(`${enemy.name} has ${enemy.current_health - damage} HP left.`)
@@ -135,18 +219,12 @@ class Character {
                 console.log(`You were killed by ${enemy.name}!`)
                 fightActive = false
             }
-        }           
-
-
-            
-            
+        }         
         }
-
-
     
     }
 
-fightScene()
+
 
 
 
@@ -167,9 +245,9 @@ fightScene()
     kaboom({
         global: true,
         fullscreen: false,
-        scale: 2,
+        scale: 1,
         debug: true,
-        clearColor: [0, 0, 0, 0.1],
+        clearColor: [0, 0, 0, .5],
     });
 
     loadRoot("/img/");
@@ -363,7 +441,7 @@ fightScene()
 
         addButton("start", vec2(100, 100), () => {
             let monster = new ScaledEntity("slime", 4);
-    console.log(monster);
+            console.log(monster);
         });
 
         addButton("quit", vec2(100, 150), () => {
@@ -376,41 +454,134 @@ fightScene()
     });
 
     scene("main", () => {
-        addButton("start", vec2(100, 100), () => {
-            alert("oh hi");
+        layers(["bg", "obj", "ui"], "obj");
+
+        addButton(player.name, vec2(100, 100), () => {
+            alert(player.name);
         });
+
+        const name = add([
+            text(`Welcome, ${player.name}!\n`),
+            pos(500,400),
+            layer("ui"),
+            scale()
+        ]);
+
+
+
+        // Used the below to figure out coordinates
+        // const screenmapper = add([
+        //     text("_|_"),
+        //     pos(640,474),
+        //     layer("ui"),
+        //     origin("center")
+        // ]);
+        
 
         addButton("quit", vec2(100, 150), () => {
             alert("bye");
         });
+
+
+        addTextElement("test", vec2(50,50), () => {
+        console.log(test)
+    })
+    
+    
+
+
+
+    
     });
 
+    
+
+    // scene("main", () => {
+    //     addButton("start", vec2(100, 100), () => {
+    //         alert("oh hi");
+    //     });
+
+    //     addButton("quit", vec2(100, 150), () => {
+    //         alert("bye");
+    //     });
+    // });
 
 
-    start("game", { level: 0, score: 0 });
+    // start("game", { level: 0, score: 0 });
+
+
+    scene("menu", () => {
+
+        const name = add([
+            text(`Welcome, ${player.name}!\n`),
+            pos(500,400),
+            layer("ui"),
+            scale()
+        ]);
+        
+        // console.log("NEW FIGHT")
+        // fightScene()
+
+        
+
+
+        addButton(" Main Menu", vec2(400,40), () => {
+console.log(1)
+        })
+
+        addButton(" Test Fight", vec2(50,60), "testtag", () => {
+            go("fight");
+        })
+
+
+        addButton(" Quit", vec2(50,100), () => {
+            console.log(4)
+        })
+        
+    })
+
+    scene("fight", () => {
+
+
+
+        
+        const text1 = add([text(`Name: ${player.name}`),  pos(20, 50), origin("left")])
+
+
+        
+        const text2 = add([text(`Level: ${player.level}`), pos(20,60), origin("left")])
+        const text3 = add([text(`HP: ${player.current_health}/${player.max_health}`), pos(20,70), origin("left")])
+        const text4 = add([text(`MP: ${player.current_mana}/${player.max_mana}`), pos(20,80), origin("left")])
+        const text5 = add([text(`${player.name}`), pos(20,90), origin("left")])
+        const text6 = add([text(`STR:${player.strength}, STA:${player.stamina}, DEF:${player.defence}`), pos(20,100), origin("left")])
+        const text7 = add([text(`EXP: ${player.experience}`), pos(20,110), origin("left")])
+
+
+
+        // const textDisplay = add([text("Welcome!", 12),  pos(50, 450), origin("left")
+	
+  
+
+
+
+        addButton(" Attack", vec2(50, 400), () => {
+            text3.text = `HP: ${player.current_health}/${player.max_health}`
+enemyRound()
+        })
+
+
+    })
+
+
+    start("fight");
 
 
 
 
+console.log(player)
 
 
-    function addButton(txt, p, f) {
-        const bg = add([pos(p), rect(60, 30), origin("center"), color(1, 1, 1)]);
 
-        // TODO: text() and rect() both have 'width'
-        add([text(txt), pos(p), , origin("center"), color(0, 0, 0)]);
-
-        bg.action(() => {
-            if (bg.isHovered()) {
-                bg.color = rgb(0.8, 0.8, 0.8);
-                if (mouseIsClicked()) {
-                    f();
-                }
-            } else {
-                bg.color = rgb(1, 1, 1);
-            }
-        });
-    }
 
 
 
