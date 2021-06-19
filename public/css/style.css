@@ -1,0 +1,11 @@
+        margin: 0;
+        overflow: hidden;
+      }
+body {
+    margin: 0;
+    overflow: hidden;
+  }
+.game {
+    height: 80%;
+    width: 80%;
+}

@@ -15,3 +15,20 @@ post '/signup' do
 
 redirect '/'
 end
+
+
+
+get '/posttest' do
+
+    erb :'/game/posttest'
+end
+
+post '/posttest' do
+    username = params[:username]
+    email = params[:email]
+    password = params[:password]
+
+    create_user( username, email, password )
+
+redirect '/'
+end

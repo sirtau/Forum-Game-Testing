@@ -77,7 +77,7 @@ end
 
 def check_character_id_owner ( )
 
-    if character_array[:owner_id] == session[:user_id]
+    if character_hash[:owner_id] == session[:user_id]
         return true
     else
         return false
