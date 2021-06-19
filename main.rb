@@ -8,9 +8,10 @@ require_relative 'db/db'
 require_relative 'models/user'
 require_relative 'models/monster'
 require_relative 'models/fight'
+require_relative 'models/character'
 require_relative 'controller/users_controller'
-require_relative 'controller/shop_controller'
-# require_relative 'controller/fight_controller'
+require_relative 'controller/town_controller'
+require_relative 'controller/game_controller'
 require_relative 'controller/monster_controller'
 require_relative 'controller/sessions_controller'
 
@@ -21,10 +22,11 @@ get '/' do
     email = params[:email]
     user_id = session[:user_id]
     textbox = params[:textbox]
-    character_array = session[:character_array]
+    character_hash = session[:character_hash]
     if is_logged_in?( )
 
         char_list = list_characters_by_id( user_id )
+
 
 
     end
@@ -45,6 +47,6 @@ get '/' do
     
 
 
-    erb :'/menu', locals: { username: username, email: email, char_list: char_list, textbox: textbox, character_array: character_array }
+    erb :'/menu', locals: { username: username, email: email, char_list: char_list, textbox: textbox, character_hash: character_hash }
 
 end
