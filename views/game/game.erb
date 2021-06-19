@@ -152,7 +152,7 @@ class Character {
                 console.log(`${player.name} missed!`)
             }
             return `${player.name}'s Swing Strength: ${playerSwing}. Damage Done: ${damage}\n${enemy.name} has ${enemy.current_health - damage} HP left.`
-            // console.log(textDisplay)
+            
             enemy.current_health = enemy.current_health - damage
 
 
@@ -168,8 +168,8 @@ class Character {
                 enemyDamage = 0
                 console.log(`${enemy.name} missed!`)
             } else {
-                
-            console.log(`${player.name} has ${player.current_health - enemyDamage} HP left.`)
+            return `${enemy.name}'s Swing Strength: ${enemySwing}. Damage Done: ${enemyDamage}\n${player.name} has ${player.current_health - enemyDamage} HP left.`    
+            // console.log(`${player.name} has ${player.current_health - enemyDamage} HP left.`)
             player.current_health = player.current_health - enemyDamage
 
 
@@ -245,7 +245,7 @@ class Character {
     kaboom({
         global: true,
         fullscreen: false,
-        scale: 1,
+        scale: 2,
         debug: true,
         clearColor: [0, 0, 0, .5],
     });
@@ -542,19 +542,19 @@ console.log(1)
 
     scene("fight", () => {
 
-
+        
 
         
         const text1 = add([text(`Name: ${player.name}`),  pos(20, 50), origin("left")])
 
-
-        
         const text2 = add([text(`Level: ${player.level}`), pos(20,60), origin("left")])
         const text3 = add([text(`HP: ${player.current_health}/${player.max_health}`), pos(20,70), origin("left")])
         const text4 = add([text(`MP: ${player.current_mana}/${player.max_mana}`), pos(20,80), origin("left")])
         const text5 = add([text(`${player.name}`), pos(20,90), origin("left")])
         const text6 = add([text(`STR:${player.strength}, STA:${player.stamina}, DEF:${player.defence}`), pos(20,100), origin("left")])
         const text7 = add([text(`EXP: ${player.experience}`), pos(20,110), origin("left")])
+        const text8 = add([text('Welcome!'), pos(20,200), origin("left")])
+        const text9 = add([text('Welcome!'), pos(20,240), origin("left")])
 
 
 
@@ -565,8 +565,10 @@ console.log(1)
 
 
         addButton(" Attack", vec2(50, 400), () => {
+            text8.text = playerRound()
+            text9.text = enemyRound()
             text3.text = `HP: ${player.current_health}/${player.max_health}`
-enemyRound()
+            
         })
 
 

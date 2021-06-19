@@ -4,3 +4,13 @@ get '/town' do
 
     erb :'/game/game', locals: { character_hash: character_hash }
 end
+
+
+get '/gametest' do
+
+
+
+    erb :'/game/gametesting'
+end
+
+
