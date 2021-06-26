@@ -20,7 +20,7 @@
      <a href="/sessions/login">Login</a> or <a href="/signup">Sign Up!</a>
   <% end %>
   </div>
-    <% if session[:user_id] %>
+    <% if session[:user_id] && char_list %>
       <div class="character_list">
         <p>Click on ID to change Character</p>
           <ul>
