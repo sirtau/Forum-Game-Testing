@@ -1,5 +1,7 @@
-<div>
+
+
   <% if session[:user_id] %>
+  <div>
     <p>Welcome, <%= session[:username] %>!</p>
     <p>UserID: <%= session[:user_id] %></p>
 
@@ -16,10 +18,9 @@
       </ul>
       <h3><a href="town">Go to town.</a></h3>
     <% end %> 
-    <% else %>
-     <a href="/sessions/login">Login</a> or <a href="/signup">Sign Up!</a>
-  <% end %>
   </div>
+  <% end %>
+ 
     <% if session[:user_id] && char_list %>
       <div class="character_list">
         <p>Click on ID to change Character</p>
@@ -31,7 +32,6 @@
             </li>
           <% end %> 
         </ul>
-        <% end %> 
   <div class="new-character-box">
           <form action="/create" method="POST">
   
@@ -42,8 +42,9 @@
             <input type="submit" value="Create New Character!" />
           </form>
         </section>
-          
       </div>
+  <% end %> 
+
 
     
 

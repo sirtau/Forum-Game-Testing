@@ -108,9 +108,13 @@ a {
           
         <span class="menubar"><h1>WebRPG</h1>
         <% if session[:user_id] %>
- <p><a href="/">Home</a> | <a href="/board">Message Board</a></p></span></header>
+ <p><a href="/">Home</a> | <a href="/board">Message Board</a> | <a href="/logout">Log Out</a> </p>
 
-        <% end %> 
+        <% else %> 
+        
+<p><a href="/sessions/login">Login</a> or <a href="/signup">Sign Up!</a></p>
+<% end %>
+</span></header>
         <main class="content">
         <section class="main-stuff">
         <%= yield %>

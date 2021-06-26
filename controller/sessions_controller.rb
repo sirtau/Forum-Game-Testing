@@ -32,3 +32,10 @@ post '/posttest' do
 
 redirect '/'
 end
+
+get '/logout' do
+    session.clear
+
+    redirect '/'
+end
+

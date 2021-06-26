@@ -28,9 +28,7 @@ get '/' do
     if is_logged_in?( )
 
         char_list = list_characters_by_id( user_id )
-
-
-
+      
     end
 
 
