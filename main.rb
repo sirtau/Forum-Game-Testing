@@ -9,11 +9,13 @@ require_relative 'models/user'
 require_relative 'models/monster'
 require_relative 'models/fight'
 require_relative 'models/character'
+require_relative 'models/messageboard'
 require_relative 'controller/users_controller'
 require_relative 'controller/town_controller'
 require_relative 'controller/game_controller'
 require_relative 'controller/monster_controller'
 require_relative 'controller/sessions_controller'
+require_relative 'controller/board_controller'
 
 
 

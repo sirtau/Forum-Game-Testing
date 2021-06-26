@@ -1,0 +1,17 @@
+<div class="edit-box">
+  <h2>Edit post!</h2>
+
+<form action='/updatecomment/<%= post["post_id"]%>' method="POST">
+    <input type="hidden" name="_method" value="PUT" />
+    <% if !comment %>
+    <div> Title:<input type="text" name="post_title" value='<%= post["post_title"] %>'>  </input></div>
+
+    <% end %>
+    <div>
+    Content:<input type="text" name="post_content" value='<%= post["post_content"] %>'>  </input>
+  </div>
+    
+  
+    <input type="submit" value="Post!" />
+  </form>
+</div>

@@ -1,0 +1,38 @@
+<div>
+
+
+<% if !posts %>
+  Nothing here yet!
+<% else %>
+  Threads: 
+  <% posts.reverse_each do |post| %>
+  
+    <% date_array = post["post_date"].split('/') %>
+    <% date_array = display_date(date_array, post["username"]) %>
+    <% p date_array %>
+    <div class="thread-list"> 
+      <div><a href='/thread/<%= post["post_id"] %>'><p><h2><%= post["post_title"] %></h2></p> </div>
+      <div><p><%= post["post_content"] %></p></div>
+      <div>
+        <p class="date-time">Posted by <%= date_array[0] %> <%= date_array[1] %> </a>
+        <span class="edit-delete-buttons">
+            <a href='/editcomment/<%= post["parent_id"] %>/<%= post["post_id"] %>'>Edit</a> <a href='/deletethread/<%= post["parent_id"] %>'>Delete</a></p>
+        </span>
+    </div>
+    </div>
+  <% end %>
+<% end %>
+
+
+<div class="new-post">
+  <p>New Thread: </p>
+<form action="/newthread" method="POST">
+
+  <div><input type="text" placeholder="Title:" name="post_title"></input></div>
+  <div><textarea placeholder="Content:" rows="5" cols="30" name="post_content"></textarea></div>
+  
+
+  <input type="submit" value="Post!" />
+</form>
+</div>
+</div>

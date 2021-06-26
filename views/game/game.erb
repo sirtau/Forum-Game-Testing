@@ -33,7 +33,13 @@
 
 
 
-           
+         
+class GameData {
+    constructor (_Player_HP, _Enemy_HP) {
+        this.playerhp = _Player_HP
+        this.enemyhp = _Enemy_HP
+    }
+}  
 
 
 
@@ -54,6 +60,8 @@ function posttest () {
     password: "test3",
     });
 }
+
+
 
 class Character {
         constructor ( _name, _level ) {
@@ -140,26 +148,28 @@ class Character {
  
 
     
+    
 
 
 
     function playerRound ( ) {
-    let bothAlive 
-        let playerSwing = swingStrength(player.strength)
-            let damage = playerSwing*2 - (enemy.defence/2)
-            if (damage < 0) {
-                damage = 0
-                console.log(`${player.name} missed!`)
-            }
-            return `${player.name}'s Swing Strength: ${playerSwing}. Damage Done: ${damage}\n${enemy.name} has ${enemy.current_health - damage} HP left.`
+    let bothAlive = true
+    let playerSwing = swingStrength(player.strength)
+        let damage = playerSwing*2 - (enemy.defence/2)
+        if (damage < 0) {
+            damage = 0
+            console.log(`${player.name} missed!`)
+        }
+        console.log(textDisplay.text)
+        textDisplay.text = "`${player.name}'s Swing Strength: ${playerSwing}. Damage Done: ${damage}\n${enemy.name} has ${enemy.current_health - damage} HP left.`"
+        
+        enemy.current_health = enemy.current_health - damage
+
+
+        if (enemy.current_health < 1) {
+            console.log(`You have defeated the dangerous ${enemy.name}`)
             
-            enemy.current_health = enemy.current_health - damage
-
-
-            if (enemy.current_health < 1) {
-                console.log(`You have defeated the dangerous ${enemy.name}`)
-                
-            }   
+        }   
     }
     function enemyRound() {
         let enemySwing = swingStrength(enemy.strength)
@@ -168,7 +178,7 @@ class Character {
                 enemyDamage = 0
                 console.log(`${enemy.name} missed!`)
             } else {
-            return `${enemy.name}'s Swing Strength: ${enemySwing}. Damage Done: ${enemyDamage}\n${player.name} has ${player.current_health - enemyDamage} HP left.`    
+            console.log(`${enemy.name}'s Swing Strength: ${enemySwing}. Damage Done: ${enemyDamage}\n${player.name} has ${player.current_health - enemyDamage} HP left.`)
             // console.log(`${player.name} has ${player.current_health - enemyDamage} HP left.`)
             player.current_health = player.current_health - enemyDamage
 
@@ -542,9 +552,7 @@ console.log(1)
 
     scene("fight", () => {
 
-        
-
-        
+                
         const text1 = add([text(`Name: ${player.name}`),  pos(20, 50), origin("left")])
 
         const text2 = add([text(`Level: ${player.level}`), pos(20,60), origin("left")])
@@ -557,17 +565,13 @@ console.log(1)
         const text9 = add([text('Welcome!'), pos(20,240), origin("left")])
 
 
-
-        // const textDisplay = add([text("Welcome!", 12),  pos(50, 450), origin("left")
-	
-  
-
-
+        const textDisplay = add([text("Wererelcome!", 12),  pos(50, 450), origin("left")])
 
         addButton(" Attack", vec2(50, 400), () => {
-            text8.text = playerRound()
-            text9.text = enemyRound()
+            playerRound()
             text3.text = `HP: ${player.current_health}/${player.max_health}`
+            enemyRound()
+
             
         })
 
@@ -580,7 +584,10 @@ console.log(1)
 
 
 
-console.log(player)
+console.log({scene})
+
+
+
 
 
 

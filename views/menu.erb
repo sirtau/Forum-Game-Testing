@@ -1,52 +1,48 @@
+<div>
+  <% if session[:user_id] %>
+    <p>Welcome, <%= session[:username] %>!</p>
+    <p>UserID: <%= session[:user_id] %></p>
 
-<% if session[:user_id] %>
-<p>Welcome, <%= session[:username] %>!</p>
-<p>UserID: <%= session[:user_id] %></p>
+    <% if session[:character_hash] == "invalid" %> 
+      <%= p "Invalid Character" %> 
+    <% elsif session[:character_hash] %> 
+      <h5> Currently Selected Character:</h5>
+      <h3><%= character_hash["char_name"] %></h3>
 
-<% if session[:character_hash] == "invalid" %>
-<%= p "Invalid Character" %>
-<% elsif session[:character_hash] %> 
-<%= character_hash["char_name"] %>
-
-<ul>
-  
-<% character_hash.each do |key, value| %>
-<li><%= p "#{key}: #{value}" %></li>
-<% end %>
-</ul>
-
-
-
-
-<% end %>
-
-
-
-<% if char_list %>
-<ul>
-  <% char_list.each do |char| %> 
-  <li>
-    <a href='/select_character/<%= char["char_id"] %>'> 
-  <%= char["char_id"] %> 
-  <%= char["owner_id"] %> </a>
-  <%= char["char_name"] %> 
-  <%= char["gamestate"] %>
-  <% if char["inventory"] == 'e' %>  
-  <%= "Empty" %>
-  <% else %>
-  <%= char["inventory"] %> 
+      <ul>
+        <% character_hash.each do |key, value| %>
+        <li><%= p "#{key}: #{value}" %></li>
+        <% end %>
+      </ul>
+      <h3><a href="town">Go to town.</a></h3>
+    <% end %> 
+    <% else %>
+     <a href="/sessions/login">Login</a> or <a href="/signup">Sign Up!</a>
   <% end %>
+  </div>
+    <% if session[:user_id] %>
+      <div class="character_list">
+        <p>Click on ID to change Character</p>
+          <ul>
+          <% char_list.each do |char| %>
+            <li>
+              <a href='/select_character/<%= char["char_id"] %>'> ID: <%=  char["char_id"] %></a>
+              <%= char["char_name"] %> 
+            </li>
+          <% end %> 
+        </ul>
+  <div class="new-character-box">
+          <form action="/create" method="POST">
+  
+            <input type="text" name="char_name" placeholder = "New Character Name:">  </input>
+            <input type="hidden" name="owner_id" value="<%= session[:user_id] %>"></input>
+            
+          
+            <input type="submit" value="Create New Character!" />
+          </form>
+        </section>
+          <% end %> 
+      </div>
 
+    
 
-<% end %>
-<% else %>
-<p><a href="create"><%= "Create a character!" %> </a></p>
-<% end %>
-<% else %>
-<a href="/sessions/login">Login</a> or <a href="/signup">Sign Up!</a>
-<% end %>
-
-<a href="town">Go to town.</a>
-
-
-</ul>

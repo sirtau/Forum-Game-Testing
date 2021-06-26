@@ -85,3 +85,17 @@ def check_character_id_owner ( )
 end
 
 
+
+def check_logged_in()
+    if !session[:user_id]
+        puts "Not logged in, redirecting to home"
+        redirect '/'
+    end
+end
+
+def check_char_selected()
+    if !session[:character_hash]
+        puts "No character selected, redirecting to home"
+        redirect '/'
+    end
+end

@@ -1,17 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="/css/style.css" />
-    <script src="/js/main.js" defer>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        
+        <style>
 
-    </script>
-  </head>
-  <body>
-    <h1>RPG game!</h1>
-    <%= yield %>
-  </body>
+body {
+    margin: 0;
+    overflow: hidden;
+    background-color: rgb(245, 245, 245);
+   color:rgb(105, 105, 105);
+   font-family: sans-serif;
+   align-items: center;
+  }
+
+a {
+  text-decoration: none;
+            color: rgb(9, 114, 0);
+}
+
+.menubar {
+  
+  min-width: 800px;
+  background: rgba(112, 97, 97, 0.089);
+  text-align: center;
+
+
+
+}
+
+.new-character-box {
+  margin: 20;
+  text-align: center;
+}
+
+.content {
+    width: 800px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 70% 30%;
+    gap: 20px;   
+}
+.main-stuff {
+  width: 800px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 70% 30%;
+    gap: 20px;   
+    
+}
+.main-post {
+  margin: 0 auto;
+    display: grid;
+    grid-template-columns: 10% 80%;
+    grid-template-rows: 20px auto;
+    gap: 20px;   
+    padding: 20px;
+    background-color: rgb(255, 255, 255);
+}
+
+.edit-box {
+  padding: 20px;
+}
+
+.edit-delete-buttons {
+  font-size: 12px;
+}
+
+.thread-list {
+  background-color: white;
+}
+
+.thread-parent-date-time {
+  padding: 20px;
+  background-color: rgb(255, 255, 255);
+  margin-top: -20px;
+}
+
+.date-time {
+  color: rgb(179, 179, 179);
+  margin: 0;
+}
+
+.new-post {
+  padding:10px;
+}
+
+.comment-text {
+  font-size: 18px;
+}
+
+.comments-list {
+  background-color: rgb(255, 255, 255);
+  padding: 20px;
+}
+
+        </style>
+        
+        <script src="/js/main.js" defer></script>
+    </head>
+    <body>
+
+        <header>
+          
+        <span class="menubar"><h1>WebRPG</h1>
+        <% if session[:user_id] %>
+ <p><a href="/">Home</a> | <a href="/board">Message Board</a></p></span></header>
+
+        <% end %> 
+        <main class="content">
+        <section class="main-stuff">
+        <%= yield %>
+      </section>
+    </div>
+    </body>
+  </main>
 </html>

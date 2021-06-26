@@ -1,11 +1,16 @@
-        margin: 0;
-        overflow: hidden;
-      }
+
 body {
     margin: 0;
     overflow: hidden;
+    background-color: red;
   }
-.game {
-    height: 80%;
-    width: 80%;
+
+
+.menu {
+  padding: 10px;
+  background: rgba(0,0,0,0.5);
+}
+.menu-items {
+  display: inline;
+  padding: 0px 10px 0px 10px;
 }
