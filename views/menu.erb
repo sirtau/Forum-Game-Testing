@@ -20,9 +20,9 @@
     <% end %> 
   </div>
   <% end %>
- 
+  <div class="character_list">
     <% if session[:user_id] && char_list %>
-      <div class="character_list">
+
         <p>Click on ID to change Character</p>
           <ul>
           <% char_list.each do |char| %>
@@ -32,6 +32,7 @@
             </li>
           <% end %> 
         </ul>
+        <% end %> 
   <div class="new-character-box">
           <form action="/create" method="POST">
   
@@ -43,7 +44,7 @@
           </form>
         </section>
       </div>
-  <% end %> 
+
 
 
     
