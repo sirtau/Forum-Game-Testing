@@ -82,15 +82,13 @@ end
 
 def delete_comment( post_id )
     sql_query = ("DELETE FROM messageboard WHERE post_id = #{ post_id }")
-    puts sql_query
-        results = run_sql( sql_query )
-        return results
+    results = run_sql( sql_query )
+    return results
 end
 
 def delete_thread( parent_id )
     sql_query = ("DELETE FROM messageboard WHERE parent_id = #{ parent_id }")
-    puts sql_query
-        results = run_sql( sql_query )
-        return results
+    results = run_sql( sql_query )
+    return results
 end
 
