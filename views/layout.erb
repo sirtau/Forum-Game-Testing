@@ -27,14 +27,27 @@
             min-width: 800px;
             background: rgba(112, 97, 97, 0.089);
             text-align: center;
+          }
 
+          .login-input {
+            text-align: center;
+            margin: 20px;
+            grid-column: 1 / span 2;
 
+          }
 
+          .input-field {
+            padding: 20px;
+          }
+
+          .footer {
+            grid-column: 1 /span 2;
+            margin-top: 150px;
           }
 
           .new-character-box {
             margin: 20;
-            text-align: center;
+
           }
 
           .content {
@@ -105,20 +118,29 @@
 
         <header>
           
-        <span class="menubar"><h1>WebRPG</h1>
-        <% if session[:user_id] %>
- <p><a href="/">Home</a> | <a href="/board">Message Board</a> | <a href="/logout">Log Out</a> | <a href="https://github.com/sirtau/webrpg">GitHub</a> </p>
-
+        <span class="menubar"><a href="/"><h1>WebRPG</h1></a>
+        <% if !session[:user_id] %>
+        <p><a href="/sessions/login">Login</a> or <a href="/signup">Sign Up!</a></p>
         <% else %> 
-        
-<p><a href="/sessions/login">Login</a> or <a href="/signup">Sign Up!</a></p>
-<% end %>
+ <p>
+   <a href="/">Home</a> | 
+   <a href="/board">Message Board</a> | 
+   <a href="/logout">Log Out</a> | 
+   <a href="https://github.com/sirtau/webrpg">GitHub</a>
+</p>
+
+ <% end %>
 </span></header>
         <main class="content">
         <section class="main-stuff">
         <%= yield %>
+        
       </section>
+      
     </div>
+    
+    <footer class="footer"><hr>WebRPG - Version 0.00001.004 pre-pre-pre-early-alpha.</footer>
     </body>
+
   </main>
 </html>
